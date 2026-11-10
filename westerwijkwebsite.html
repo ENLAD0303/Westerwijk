@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Westerwijk</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/* Opzet: een lange tafel als beeldmerk. Oker (uit je WordPress-knoppen) als warme kleur,
+   diep groen als tegenwicht. Elke menu-knop springt naar een eigen sectie op de pagina. */
+:root {
+  --bg: #fbf8f2;          /* achtergrond */
+  --surface: #f2ebdd;     /* vlakken */
+  --ink: #1f2b24;         /* tekst */
+  --muted: #5b675f;       /* rustige tekst */
+  --oker: #df9b47;        /* jouw oranje */
+  --groen: #24493a;       /* donkergroen */
+  --on-groen: #f6efe2;    /* tekst op groen */
+  --line: #ded3bf;
+  --fout: #a8321f;        /* foutmeldingen */
+  --display: "Bricolage Grotesque", "Trebuchet MS", system-ui, sans-serif;
+  --body: "Instrument Sans", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141a17; --surface: #1d2621; --ink: #ece6da; --muted: #a3aba3; --oker: #e8a65a; --groen: #2f5b49; --on-groen: #f6efe2; --line: #2e3a33;
+    --fout: #ff9a85;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141a17; --surface: #1d2621; --ink: #ece6da; --muted: #a3aba3;
+  --oker: #e8a65a; --groen: #2f5b49; --on-groen: #f6efe2; --line: #2e3a33;
+  --fout: #ff9a85;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--body); font-size: 1.0625rem; line-height: 1.65;
+}
+.wrap {
+  max-width: 68rem; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+h1, h2, h3 { font-family: var(--display); line-height: 1.05; text-wrap: balance; margin: 0; }
+p { margin: 0; max-width: 62ch; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--oker); outline-offset: 3px; border-radius: 4px; }
+
+/* ---------- Menu ---------- */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.menu {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+.menu .wrap { display: flex; align-items: center; gap: 1rem; padding-block: .75rem; flex-wrap: wrap; }
+.logo { font-family: var(--display); font-weight: 800; font-size: 1.25rem; text-decoration: none; margin-right: auto; }
+.logo span { color: var(--oker); }
+.menu nav { display: flex; gap: .25rem; flex-wrap: wrap; }
+.menu nav a {
+  text-decoration: none; font-weight: 500; font-size: .95rem;
+  padding: .4rem .75rem; border-radius: 999px;
+}
+.menu nav a:hover { background: var(--surface); }
+.menu nav a.knop { background: var(--oker); color: #1f2b24; }
+
+/* ---------- Opening ---------- */
+.hero .wrap { padding-block: clamp(3rem, 8vw, 6rem) 2rem; display: grid; gap: 1.5rem; }
+.eyebrow { font-size: .8rem; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); font-weight: 600; }
+.hero h1 { font-size: clamp(2.6rem, 7.5vw, 5.75rem); font-weight: 800; letter-spacing: -.02em; max-width: 14ch; }
+.hero h1 em { font-style: normal; color: var(--oker); }
+.hero .intro { font-size: 1.2rem; color: var(--muted); }
+
+/* De lange tafel: borden langs een tafelblad, één plek is nog vrij */
+.tafel { padding-block: 1rem 3rem; }
+.tafelblad {
+  position: relative; background: var(--groen); border-radius: 18px;
+  padding: 1.75rem 1.25rem; display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(56px, 1fr)); gap: .9rem;
+}
+.bord {
+  aspect-ratio: 1; max-width: 100%; border-radius: 50%;
+  background: var(--on-groen); box-shadow: inset 0 0 0 7px color-mix(in srgb, var(--on-groen) 70%, var(--groen));
+}
+.bord.vrij {
+  background: transparent; box-shadow: none;
+  border: 2px dashed var(--oker);
+  display: grid; place-items: center; color: var(--oker);
+  font-family: var(--display); font-weight: 700; font-size: .7rem; text-align: center; line-height: 1.1;
+}
+.tafel figcaption { margin-top: .75rem; color: var(--muted); font-size: .9rem; }
+
+/* ---------- Dinsdag-band ---------- */
+.dinsdag { background: var(--oker); color: #1f2b24; }
+.dinsdag .wrap {
+  padding-block: clamp(2.5rem, 6vw, 4rem);
+  display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center;
+}
+.dag {
+  font-family: var(--display); font-weight: 800; line-height: .9;
+  font-size: clamp(3rem, 9vw, 6.5rem); letter-spacing: -.03em;
+}
+.dinsdag h2 { font-size: clamp(1.5rem, 3vw, 2.1rem); margin-bottom: .5rem; }
+@media (max-width: 640px) { .dinsdag .wrap { grid-template-columns: 1fr; gap: 1rem; } }
+
+/* ---------- Secties ---------- */
+section.blok { scroll-margin-top: 5rem; }
+section.blok .wrap { padding-block: clamp(3rem, 7vw, 5rem); display: grid; grid-template-columns: 14rem 1fr; gap: 2rem; border-top: 1px solid var(--line); }
+section.blok h2 { font-size: clamp(1.8rem, 4vw, 2.6rem); }
+.blok .tekst { display: grid; gap: 1rem; min-width: 0; }
+@media (max-width: 720px) { section.blok .wrap { grid-template-columns: 1fr; gap: 1rem; } }
+
+/* Kaartjes voor de leefgemeenschap */
+.drie { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; margin-top: .5rem; }
+.kaart { background: var(--surface); border-radius: 14px; padding: 1.25rem; display: grid; gap: .35rem; align-content: start; }
+.kaart h3 { font-size: 1.2rem; }
+.kaart p { color: var(--muted); font-size: .98rem; }
+
+.vul-aan { color: var(--muted); font-style: italic; }
+
+/* Contact */
+.contact-regel { display: flex; gap: .75rem; align-items: center; flex-wrap: wrap; }
+.adres { font-family: var(--display); font-size: 1.35rem; font-weight: 700; user-select: all; }
+button {
+  font: inherit; font-weight: 600; font-size: .9rem; cursor: pointer;
+  border: 1px solid var(--ink); background: transparent; color: var(--ink);
+  padding: .4rem .9rem; border-radius: 999px;
+}
+button:hover { background: var(--ink); color: var(--bg); }
+
+footer .wrap { padding-block: 2rem 3rem; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--line); }
+
+/* ---------- Knoppen ---------- */
+.knoppen { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 1.25rem; }
+.knop-groot {
+  display: inline-flex; align-items: center; gap: .5rem; text-decoration: none;
+  font-weight: 600; font-size: 1rem; padding: .7rem 1.2rem; border-radius: 999px;
+}
+.knop-donker { background: #1f2b24; color: #f6efe2; }
+.knop-rand { color: #1f2b24; box-shadow: inset 0 0 0 2px #1f2b24; }
+.knop-donker:hover { background: #24493a; }
+.knop-rand:hover { background: rgba(31,43,36,.1); }
+
+/* ---------- Agenda ---------- */
+.filters { display: flex; gap: .5rem; flex-wrap: wrap; }
+.filter { border-color: var(--line); }
+.filter[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.agenda { display: grid; }
+.maand {
+  font-family: var(--display); font-size: 1.05rem; font-weight: 700; color: var(--muted);
+  padding-top: 1.25rem; padding-bottom: .25rem; text-transform: capitalize;
+}
+.item {
+  display: grid; grid-template-columns: 3.75rem 1fr auto; gap: 1rem; align-items: center;
+  padding-block: .85rem; border-bottom: 1px solid var(--line);
+}
+.datum { text-align: center; background: var(--surface); border-radius: 12px; padding-block: .45rem; line-height: 1.05; }
+.datum b { display: block; font-family: var(--display); font-size: 1.55rem; font-variant-numeric: tabular-nums; }
+.datum small { font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 600; }
+.item.maaltijd .datum { background: var(--oker); color: #1f2b24; }
+.item h3 { font-size: 1.1rem; font-weight: 700; }
+.item .wat { min-width: 0; }
+.meta { color: var(--muted); font-size: .92rem; }
+.chip {
+  display: inline-block; vertical-align: middle; margin-left: .4rem;
+  font-family: var(--body); font-size: .68rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: .05rem .5rem;
+}
+.leeg { color: var(--muted); padding-block: 1rem; }
+@media (max-width: 520px) {
+  .item { grid-template-columns: 3.5rem 1fr; }
+  .item button { grid-column: 2; justify-self: start; }
+}
+
+/* ---------- Aanmelden ---------- */
+.aanmeld-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 1.25rem; align-items: start; }
+@media (max-width: 900px) { .aanmeld-grid { grid-template-columns: 1fr; } }
+.formulier, .bedankt { background: var(--surface); border-radius: 16px; padding: 1.5rem; display: grid; gap: 1rem; min-width: 0; }
+.veld { display: grid; gap: .35rem; min-width: 0; }
+.veld label { font-weight: 600; font-size: .95rem; }
+.veld .hint { color: var(--muted); font-size: .85rem; }
+input, select, textarea {
+  font: inherit; font-size: 1rem; color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 10px; padding: .6rem .75rem; width: 100%;
+}
+textarea { min-height: 5rem; resize: vertical; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--oker); outline-offset: 1px; }
+.twee { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media (max-width: 520px) { .twee { grid-template-columns: 1fr; } }
+.verstuur { justify-self: start; background: var(--groen); color: var(--on-groen); border: 0; padding: .75rem 1.4rem; font-size: 1rem; }
+.verstuur:hover { background: var(--ink); color: var(--bg); }
+.foutmelding { color: var(--fout); font-weight: 600; }
+.bedankt h3 { font-size: 1.5rem; }
+
+.whatsapp { background: var(--groen); color: var(--on-groen); border-radius: 16px; padding: 1.5rem; display: grid; gap: .9rem; }
+.whatsapp h3 { font-size: 1.4rem; }
+.whatsapp ol { margin: 0; padding-left: 1.2rem; display: grid; gap: .35rem; }
+.whatsapp .let-op { background: rgba(0,0,0,.18); border-radius: 10px; padding: .75rem .9rem; font-size: .95rem; }
+.wa-knop { justify-self: start; background: var(--oker); color: #1f2b24; }
+.wa-knop[aria-disabled="true"] { opacity: .65; cursor: default; }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<!-- MENU: dezelfde onderdelen als je WordPress-site -->
+<header class="menu">
+  <div class="wrap">
+    <a class="logo" href="#top">Wester<span>wijk</span></a>
+    <nav aria-label="Hoofdmenu">
+      <a href="#buurt">Buurt</a>
+      <a href="#agenda">Agenda</a>
+      <a href="#verhuur">Verhuur</a>
+      <a href="#geschiedenis">Geschiedenis</a>
+      <a href="#leefgemeenschap">Leefgemeenschap</a>
+      <a href="#geven">Geven</a>
+      <a class="knop" href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- OPENING -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Leefgemeenschap &amp; buurthuis</span>
+      <h1>Al 100 jaar een plek om <em>samen</em> te komen.</h1>
+      <p class="intro">Westerwijk heeft ondertussen al vele mensen en activiteiten meegemaakt. Tegenwoordig wonen er mensen die samen een leefgemeenschap vormen, en is er elke dinsdag buurtmaaltijd.</p>
+    </div>
+  </section>
+
+  <!-- DE LANGE TAFEL (gemaakt met CSS, geen plaatje nodig) -->
+  <figure class="tafel wrap" style="margin-top:0;margin-bottom:0">
+    <div class="tafelblad" aria-hidden="true">
+      <span class="bord"></span><span class="bord"></span><span class="bord"></span>
+      <span class="bord"></span><span class="bord"></span><span class="bord"></span>
+      <span class="bord"></span><span class="bord vrij">jouw<br>plek</span><span class="bord"></span>
+      <span class="bord"></span><span class="bord"></span><span class="bord"></span>
+    </div>
+    <figcaption>Wees welkom en schuif lekker aan!</figcaption>
+  </figure>
+
+  <!-- DINSDAG -->
+  <section class="dinsdag" aria-labelledby="dinsdag-titel">
+    <div class="wrap">
+      <div class="dag">Elke<br>dinsdag</div>
+      <div>
+        <h2 id="dinsdag-titel">Buurtmaaltijd in Westerwijk</h2>
+        <p>Iedereen uit de buurt is welkom om mee te eten. Je hoeft niemand te kennen: er is altijd een stoel vrij.</p>
+        <p>Wat er op tafel komt, delen we elke week in de groepsapp.</p>
+        <div class="knoppen">
+          <a class="knop-groot knop-donker" href="#aanmelden" data-kies="maaltijd">Meld je aan voor dinsdag</a>
+          <a class="knop-groot knop-rand" href="#weekmenu">Weekmenu via WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AGENDA: de activiteiten staan in het script onderaan (zoek naar "activiteiten") -->
+  <section class="blok" id="agenda">
+    <div class="wrap">
+      <h2>Agenda</h2>
+      <div class="tekst">
+        <p>De buurtmaaltijden en andere activiteiten van de komende weken. Voor een maaltijd meld je je met één klik aan.</p>
+        <div class="filters" role="group" aria-label="Filter de agenda">
+          <button type="button" class="filter" data-filter="alles" aria-pressed="true">Alles</button>
+          <button type="button" class="filter" data-filter="maaltijd" aria-pressed="false">Buurtmaaltijd</button>
+          <button type="button" class="filter" data-filter="activiteit" aria-pressed="false">Activiteiten</button>
+        </div>
+        <div class="agenda" id="agenda-lijst" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AANMELDEN + WHATSAPP -->
+  <section class="blok" id="aanmelden">
+    <div class="wrap">
+      <h2>Aanmelden</h2>
+      <div class="tekst">
+        <p>Schuif je dinsdag aan bij de buurtmaaltijd? Laat het ons even weten, dan houden we een plekje vrij.</p>
+        <div class="aanmeld-grid">
+          <form class="formulier" id="formulier">
+            <div class="veld">
+              <label for="f-moment">Welke dinsdag eet je mee?</label>
+              <select id="f-moment" name="dinsdag"></select>
+            </div>
+            <div class="twee">
+              <div class="veld">
+                <label for="f-naam">Naam</label>
+                <input id="f-naam" name="naam" autocomplete="name" required>
+              </div>
+              <div class="veld">
+                <label for="f-email">E-mailadres</label>
+                <input id="f-email" name="email" type="email" autocomplete="email" required>
+              </div>
+            </div>
+            <div class="twee">
+              <div class="veld">
+                <label for="f-aantal">Met hoeveel personen?</label>
+                <input id="f-aantal" name="aantal" type="number" min="1" max="12" value="1" inputmode="numeric">
+              </div>
+              <div class="veld">
+                <label for="f-dieet">Dieetwensen of allergieën</label>
+                <input id="f-dieet" name="dieet" placeholder="Bijv. vegetarisch, geen noten">
+              </div>
+            </div>
+            <div class="veld">
+              <label for="f-opmerking">Opmerking <span class="hint">(mag leeg blijven)</span></label>
+              <textarea id="f-opmerking" name="opmerking"></textarea>
+            </div>
+            <p class="foutmelding" id="foutmelding" hidden>Versturen lukte niet. Probeer het later opnieuw of mail ons.</p>
+            <button type="submit" class="verstuur">Aanmelding versturen</button>
+          </form>
+
+          <div class="bedankt" id="bedankt" hidden tabindex="-1">
+            <h3 id="bedankt-titel">Bedankt!</h3>
+            <p id="bedankt-tekst"></p>
+            <p class="vul-aan" id="niet-gekoppeld" hidden>Dit formulier is nog niet gekoppeld, dus deze aanmelding is nog niet echt verstuurd.</p>
+            <button type="button" id="nog-een">Nog iemand aanmelden</button>
+          </div>
+
+          <aside class="whatsapp" id="weekmenu">
+            <h3>Weekmenu via WhatsApp</h3>
+            <p>Elke week delen we in de groepsapp wat er op dinsdag gegeten wordt.</p>
+            <ol>
+              <li>Tik op de knop hieronder.</li>
+              <li>Vraag in WhatsApp om lid te worden.</li>
+              <li>Een beheerder keurt je aanvraag goed.</li>
+            </ol>
+            <p class="let-op">Nieuwe deelnemers worden eerst goedgekeurd. Het kan dus even duren voordat je in de groep zit.</p>
+            <a class="knop-groot wa-knop" id="wa-knop" href="#weekmenu" target="_blank" rel="noopener">Vraag toegang aan</a>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTIES: één per menu-onderdeel -->
+  <section class="blok" id="buurt">
+    <div class="wrap">
+      <h2>Buurt</h2>
+      <div class="tekst">
+        <p>Westerwijk is er voor de hele buurt. Naast de buurtmaaltijd op dinsdag is het een plek om elkaar te ontmoeten.</p>
+        <p class="vul-aan">Vul aan: activiteiten, vaste avonden, wie er langskomt.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok" id="verhuur">
+    <div class="wrap">
+      <h2>Verhuur</h2>
+      <div class="tekst">
+        <p>Op zoek naar een ruimte voor een bijeenkomst, cursus of feest? Westerwijk is te huur.</p>
+        <p class="vul-aan">Vul aan: welke ruimtes, voor hoeveel mensen, en hoe je een aanvraag doet.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok" id="geschiedenis">
+    <div class="wrap">
+      <h2>Geschiedenis</h2>
+      <div class="tekst">
+        <p>Al 100 jaar komen mensen samen in Westerwijk. In die eeuw heeft het gebouw vele mensen en activiteiten meegemaakt.</p>
+        <p class="vul-aan">Vul aan: het beginjaar, wie het bouwde, en een paar momenten uit die 100 jaar.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok" id="leefgemeenschap">
+    <div class="wrap">
+      <h2>Leefgemeenschap</h2>
+      <div class="tekst">
+        <p>Tegenwoordig wonen er mensen die samen een leefgemeenschap vormen.</p>
+        <div class="drie">
+          <div class="kaart"><h3>Samen wonen</h3><p class="vul-aan">Wie er wonen en hoe jullie het huis delen.</p></div>
+          <div class="kaart"><h3>Samen eten</h3><p class="vul-aan">Hoe de dinsdag ontstond en wie er kookt.</p></div>
+          <div class="kaart"><h3>Open huis</h3><p class="vul-aan">Hoe de buurt erbij hoort.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok" id="geven">
+    <div class="wrap">
+      <h2>Geven</h2>
+      <div class="tekst">
+        <p>Westerwijk draait op mensen die meedoen. Je kunt helpen met tijd, met eten of met een gift.</p>
+        <p class="vul-aan">Vul aan: rekeningnummer of manier van geven, en waar het geld naartoe gaat.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="blok" id="contact">
+    <div class="wrap">
+      <h2>Contact</h2>
+      <div class="tekst">
+        <p>Vragen, langskomen of mee-eten? Stuur een berichtje.</p>
+        <div class="contact-regel">
+          <span class="adres" id="mail">info@westerwijk.nl</span>
+          <button type="button" id="kopieer">Kopieer</button>
+        </div>
+        <p class="vul-aan">Vervang dit voorbeeldadres door jullie echte e-mailadres, en voeg het adres van het gebouw toe.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Westerwijk · al 100 jaar samen</div>
+</footer>
+
+<script>
+  /* =========================================================
+     INSTELLINGEN — dit zijn de dingen die je zelf aanpast
+     ========================================================= */
+
+  // Plak hier de uitnodigingslink van de WhatsApp-groep (begint met https://chat.whatsapp.com/)
+  var WHATSAPP_LINK = "";
+
+  // Waar aanmeldingen naartoe gaan. Leeg = nog niet gekoppeld (komt straks bij de hosting).
+  var FORMULIER_ADRES = "";
+
+  // De wekelijkse buurtmaaltijd: die verschijnt elke dinsdag vanzelf in de agenda.
+  var MAALTIJD = {
+    titel: "Buurtmaaltijd",
+    tijd: "",              // bijv. "18:00"; leeg = "Tijd volgt"
+    plek: "Westerwijk",
+    aantalWeken: 8         // hoeveel dinsdagen vooruit je laat zien
+  };
+  var GEEN_MAALTIJD = [];  // dinsdagen zonder maaltijd, bijv. ["2026-12-29"]
+
+  // Overige activiteiten. Datum als "jaar-maand-dag". Haal "voorbeeld: true" weg bij echte activiteiten.
+  var activiteiten = [
+    { datum: "2026-11-08", tijd: "10:00 – 13:00", titel: "Klusochtend in de tuin", plek: "Tuin", voorbeeld: true },
+    { datum: "2026-11-19", tijd: "20:00", titel: "Filmavond", plek: "Grote zaal", voorbeeld: true },
+    { datum: "2026-12-13", tijd: "14:00 – 17:00", titel: "Kerstmarkt voor de buurt", plek: "Westerwijk", voorbeeld: true }
+  ];
+
+  /* =========================================================
+     Vanaf hier hoef je niets aan te passen
+     ========================================================= */
+
+  function $(s) { return document.querySelector(s); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function iso(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function leesDatum(s) { var p = s.split("-"); return new Date(+p[0], p[1] - 1, +p[2]); }
+
+  var fmtMaand = new Intl.DateTimeFormat("nl-NL", { month: "long", year: "numeric" });
+  var fmtDag = new Intl.DateTimeFormat("nl-NL", { weekday: "short" });
+  var fmtLang = new Intl.DateTimeFormat("nl-NL", { weekday: "long", day: "numeric", month: "long" });
+
+  var vandaag = new Date(); vandaag.setHours(0, 0, 0, 0);
+
+  // Maak de komende dinsdagen aan
+  function maaltijden() {
+    var d = new Date(vandaag), lijst = [];
+    while (d.getDay() !== 2) d.setDate(d.getDate() + 1);
+    for (var i = 0; i < MAALTIJD.aantalWeken; i++) {
+      if (GEEN_MAALTIJD.indexOf(iso(d)) === -1) {
+        lijst.push({ datum: iso(d), tijd: MAALTIJD.tijd || "Tijd volgt", titel: MAALTIJD.titel, plek: MAALTIJD.plek, soort: "maaltijd" });
+      }
+      d.setDate(d.getDate() + 7);
+    }
+    return lijst;
+  }
+
+  var alles = maaltijden()
+    .concat(activiteiten.map(function (a) { return Object.assign({ soort: "activiteit" }, a); }))
+    .filter(function (a) { return leesDatum(a.datum) >= vandaag; })
+    .sort(function (a, b) { return a.datum < b.datum ? -1 : a.datum > b.datum ? 1 : 0; });
+
+  // Agenda tekenen
+  var filter = "alles";
+  function tekenAgenda() {
+    var lijst = alles.filter(function (a) { return filter === "alles" || a.soort === filter; });
+    var html = "", vorigeMaand = "";
+    if (!lijst.length) html = '<p class="leeg">Er staat nu niets gepland.</p>';
+    lijst.forEach(function (a) {
+      var d = leesDatum(a.datum), maand = fmtMaand.format(d);
+      if (maand !== vorigeMaand) { html += '<h3 class="maand">' + esc(maand) + "</h3>"; vorigeMaand = maand; }
+      html += '<div class="item ' + a.soort + '">' +
+        '<div class="datum"><small>' + esc(fmtDag.format(d).replace(".", "")) + "</small><b>" + d.getDate() + "</b></div>" +
+        '<div class="wat"><h3>' + esc(a.titel) + (a.voorbeeld ? '<span class="chip">Voorbeeld</span>' : "") + "</h3>" +
+        '<div class="meta">' + esc(a.tijd) + (a.plek ? " · " + esc(a.plek) : "") + "</div></div>" +
+        (a.soort === "maaltijd" ? '<button type="button" data-aanmelden="' + a.datum + '">Ik eet mee</button>' : "") +
+        "</div>";
+    });
+    $("#agenda-lijst").innerHTML = html;
+  }
+
+  document.querySelectorAll(".filter").forEach(function (knop) {
+    knop.addEventListener("click", function () {
+      filter = knop.dataset.filter;
+      document.querySelectorAll(".filter").forEach(function (k) { k.setAttribute("aria-pressed", k === knop ? "true" : "false"); });
+      tekenAgenda();
+    });
+  });
+
+  // Formulier: keuzelijst met dinsdagen vullen
+  var keuze = $("#f-moment");
+  alles.filter(function (a) { return a.soort === "maaltijd"; }).forEach(function (a) {
+    var o = document.createElement("option");
+    o.value = a.datum;
+    o.textContent = fmtLang.format(leesDatum(a.datum)) + (MAALTIJD.tijd ? " · " + MAALTIJD.tijd : "");
+    keuze.appendChild(o);
+  });
+
+  function naarFormulier(datum) {
+    if (datum) keuze.value = datum;
+    toonFormulier();
+    document.getElementById("aanmelden").scrollIntoView();
+    setTimeout(function () { $("#f-naam").focus({ preventScroll: true }); }, 400);
+  }
+  $("#agenda-lijst").addEventListener("click", function (e) {
+    var knop = e.target.closest("[data-aanmelden]");
+    if (knop) naarFormulier(knop.dataset.aanmelden);
+  });
+
+  // Versturen
+  var form = $("#formulier");
+  function toonFormulier() { form.hidden = false; $("#bedankt").hidden = true; }
+  function toonBedankt(gegevens, verstuurd) {
+    form.hidden = true;
+    var datum = gegevens.dinsdag ? fmtLang.format(leesDatum(gegevens.dinsdag)) : "dinsdag";
+    var personen = +gegevens.aantal > 1 ? " met " + gegevens.aantal + " personen" : "";
+    $("#bedankt-titel").textContent = "Bedankt, " + gegevens.naam.split(" ")[0] + "!";
+    $("#bedankt-tekst").textContent = "Je staat op de lijst voor " + datum + personen + ". Tot aan tafel!";
+    $("#niet-gekoppeld").hidden = verstuurd;
+    $("#bedankt").hidden = false;
+    $("#bedankt").focus();
+  }
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    $("#foutmelding").hidden = true;
+    var gegevens = Object.fromEntries(new FormData(form));
+    if (!FORMULIER_ADRES) { toonBedankt(gegevens, false); return; }
+    fetch(FORMULIER_ADRES, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify(gegevens)
+    }).then(function (r) {
+      if (!r.ok) throw new Error();
+      toonBedankt(gegevens, true);
+    }).catch(function () { $("#foutmelding").hidden = false; });
+  });
+  $("#nog-een").addEventListener("click", function () { form.reset(); toonFormulier(); $("#f-naam").focus(); });
+
+  // Knop "Meld je aan voor dinsdag" in de oranje band
+  document.querySelectorAll('[data-kies="maaltijd"]').forEach(function (a) {
+    a.addEventListener("click", function (e) { e.preventDefault(); naarFormulier(); });
+  });
+
+  // WhatsApp-knop
+  var wa = $("#wa-knop");
+  if (WHATSAPP_LINK) { wa.href = WHATSAPP_LINK; }
+  else {
+    wa.textContent = "Groepslink volgt";
+    wa.setAttribute("aria-disabled", "true");
+    wa.removeAttribute("target");
+    wa.addEventListener("click", function (e) { e.preventDefault(); });
+  }
+
+  tekenAgenda();
+
+  // Kopieer-knop: zet het e-mailadres op het klembord
+  document.getElementById("kopieer").addEventListener("click", function () {
+    var knop = this;
+    var adres = document.getElementById("mail").textContent;
+    navigator.clipboard.writeText(adres).then(function () {
+      knop.textContent = "Gekopieerd";
+      setTimeout(function () { knop.textContent = "Kopieer"; }, 1800);
+    }).catch(function () {
+      // Lukt kopiëren niet? Dan selecteren we de tekst, zodat je zelf kunt kopiëren.
+      var r = document.createRange();
+      r.selectNodeContents(document.getElementById("mail"));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+    });
+  });
+</script>
+</body>
+</html>
